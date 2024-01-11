@@ -9,7 +9,13 @@ const bodyParser = require("body-parser");
 const app = express()
 app.use(bodyParser.json()) 
 app.use(express.urlencoded())
-app.use(cors())
+app.use(cors(
+        {
+        origin: ["https://sam-crud-mdsamir92.vercel.app/upload"],
+        methods:["POST","GET","PUT","DELETE"],
+        credentials: true
+    }
+))
 
 app.use('/img',express.static('uploads'));
 
