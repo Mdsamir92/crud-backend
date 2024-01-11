@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const  Crud = require("../models/Data");
+const Image = require("../models/Image");
+const multer = require("multer");
+const path = require("path");
 
 
 // create data
