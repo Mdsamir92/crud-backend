@@ -11,6 +11,7 @@ app.use(bodyParser.json())
 app.use(express.urlencoded())
 app.use(cors())
 
+app.use('/img',express.static('uploads'));
 
 app.use('/api',router)
 
