@@ -74,4 +74,60 @@ router.delete("/delete/:id" , async(req,res) =>{
     }
 })
 
+
+
+// storage setup for upload image
+const store = multer.diskStorage({
+    destination:"./uploads/",
+    filename:function(req,file,cb){
+   cb(null,Date.now() + path.extname(file.originalname))
+    }
+})
+
+// initialize multer 
+const upload = multer({
+    storage:store,
+
+})
+
+// upload image 
+router.post('/upload',upload.single("file"),async (req,res) =>{
+    try{
+       Image.create({image:req.file.filename})
+        return res.status(201).json({msg:"file upload"})
+
+    } catch(error){
+        return res.status(422).json({error:"something went wrong!"})
+    }
+})
+
+// get image 
+router.get("/getimg" , async(req,res)=>{
+
+    try{
+      
+        const data = await Image.find();
+        return res.status(201).json({data,mesage:"get image successfully"})
+
+    } catch(error){
+        return res.status(422).json({error:"something went wrong!"})
+    }
+
+    
+})
+
+// delete image
+router.delete("/del/:id" , async(req,res) =>{
+    try{
+        const data = await Image.findByIdAndDelete(req.params.id);
+        return res.status(201).json({data,mesage:"delete successfully"})
+
+    } catch(error){
+        return res.status(422).json({error:"something went wrong!"})
+    }
+})
+
+
+
+
 module.exports = router;
